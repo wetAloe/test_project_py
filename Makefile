@@ -2,8 +2,8 @@
 build:
 	docker-compose build
 
-PHONY: run
-run:
+PHONY: up
+up:
 	docker-compose up
 
 PHONY: down
