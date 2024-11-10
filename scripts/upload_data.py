@@ -1,13 +1,14 @@
 import csv
 import asyncio
 import aiohttp
+from tqdm import tqdm
 
 
 async def upload_data():
     async with aiohttp.ClientSession() as session:
         with open("data/images.csv", "r") as file:
             reader = csv.reader(file)
-            for i, row in enumerate(reader):
+            for i, row in tqdm(enumerate(reader)):
                 if i == 0 or row[0] == "":
                     continue
 
