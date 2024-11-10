@@ -8,7 +8,6 @@ from models import images_table
 
 
 engine = create_engine(os.getenv("DATABASE_URL"), echo=True)
-
 app = fastapi.FastAPI()
 
 class Image(BaseModel):

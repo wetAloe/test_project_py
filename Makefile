@@ -10,3 +10,7 @@ up:
 PHONY: down
 down:
 	docker-compose down
+
+PHONY: upload_data
+upload_data:
+	python scripts/upload_data.py
