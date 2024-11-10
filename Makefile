@@ -1,6 +1,7 @@
-`PHONY: build
+PHONY: build
 build:
-	docker-compose build
+	docker-compose build --no-cache
+	docker image prune -f
 
 PHONY: up
 up:
