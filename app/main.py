@@ -1,12 +1,25 @@
+import os
+from contextlib import asynccontextmanager
+
 import fastapi
 from pydantic import BaseModel
+from queries import create_tables
+from sqlalchemy import create_engine
 
+
+engine = create_engine(os.getenv("DATABASE_URL"), echo=True)
+
+@asynccontextmanager
+async def lifespan(app: fastapi.FastAPI):
+    with engine.connect() as conn:
+        create_tables(engine)
+        conn.commit()
+    yield
+
+app = fastapi.FastAPI(lifespan=lifespan)
 
 class Image(BaseModel):
     data: list[int]
-
-
-app = fastapi.FastAPI()
 
 @app.post("/upload_image")
 async def upload_image(image: Image):
