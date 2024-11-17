@@ -16,5 +16,6 @@ async def upload_data():
                 data = list(map(int, row[1:]))
                 await session.post("http://localhost:8000/images/", json={"data": data})
 
+
 if __name__ == "__main__":
     asyncio.run(upload_data())

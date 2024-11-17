@@ -17,7 +17,7 @@ async def create_db_and_tables():
 
 async def get_session():
     async_session = sessionmaker(
-       bind=_async_engine, class_=AsyncSession, expire_on_commit=False
-   )
+        bind=_async_engine, class_=AsyncSession, expire_on_commit=False
+    )
     async with async_session() as session:
         yield session
