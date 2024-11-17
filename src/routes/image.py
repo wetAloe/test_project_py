@@ -1,9 +1,8 @@
 from fastapi import APIRouter
 
-from models.image import Image
 from dependencies import SessionDep
+from models.image import Image
 from repositories.image import ImageRepository
-
 
 image_router = APIRouter()
 

@@ -1,9 +1,9 @@
-from sqlmodel import SQLModel
-from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker
-from settings import get_database_settings
+from sqlmodel import SQLModel
+from sqlmodel.ext.asyncio.session import AsyncSession
 
+from settings import get_database_settings
 
 _settings = get_database_settings()
 _async_engine = create_async_engine(_settings.dns)

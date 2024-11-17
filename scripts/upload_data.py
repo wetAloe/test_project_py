@@ -1,5 +1,6 @@
-import csv
 import asyncio
+import csv
+
 import aiohttp
 from tqdm import tqdm
 

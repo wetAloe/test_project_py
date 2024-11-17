@@ -1,4 +1,4 @@
-from sqlmodel import Field, SQLModel, ARRAY, Integer
+from sqlmodel import ARRAY, Field, Integer, SQLModel
 
 
 class Image(SQLModel, table=True):
