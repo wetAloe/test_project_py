@@ -12,5 +12,5 @@ async def upload_image(image: Image, session: SessionDep):
     if len(image.data) == 0:
         return {"error": "No image data provided"}
 
-    ImageRepository.upload_image(session, image)
+    _ = await ImageRepository.upload_image(session, image)
     return {"message": "Image uploaded", "length": len(image.data)}
