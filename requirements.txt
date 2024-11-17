@@ -5,3 +5,7 @@ sqlalchemy
 psycopg2-binary
 asyncpg
 aiohttp
+tqdm
+uvicorn
+sqlmodel
+pydantic_settings

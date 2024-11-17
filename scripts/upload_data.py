@@ -13,7 +13,7 @@ async def upload_data():
                     continue
 
                 data = list(map(int, row[1:]))
-                await session.post("http://localhost:8000/upload_image", json={"data": data})
+                await session.post("http://localhost:8000/images/", json={"data": data})
 
 if __name__ == "__main__":
     asyncio.run(upload_data())
