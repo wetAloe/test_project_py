@@ -12,21 +12,23 @@ class ImageRepository:
         return image
 
     @staticmethod
-    async def get_image(session: AsyncSession, image_id: str) -> Image:
+    async def get_image(session: AsyncSession, image_id: int) -> Image:
         image = await session.get(Image, image_id)
         return image
 
     @staticmethod
-    async def delete_image(session: AsyncSession, image_id: str) -> None:
+    async def delete_image(session: AsyncSession, image_id: int) -> None:
         image = await session.get(Image, image_id)
         if image:
             await session.delete(image)
             await session.commit()
 
     @staticmethod
-    async def update_image(session: AsyncSession, image_id: str, image: Image) -> None:
+    async def update_image(session: AsyncSession, image_id: int, image: Image) -> Image:
         db_image = await session.get(Image, image_id)
         if not db_image:
             raise ValueError(f"Image with id {image_id} not found")
         db_image.data = image.data
         await session.commit()
+        await session.refresh(db_image)
+        return db_image
