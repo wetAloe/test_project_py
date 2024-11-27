@@ -4,10 +4,11 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from images.models import Image
 from images.repository import ImageRepository
+from images.constants import IMAGE_SIZE
 
 
 def resize_image(image: Image) -> Image:
-    image.data = signal.resample(image.data, 150).astype(np.uint8)
+    image.data = signal.resample(image.data, IMAGE_SIZE).astype(np.uint8).tolist()
     return image
 
 
