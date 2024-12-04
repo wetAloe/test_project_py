@@ -1,37 +1,36 @@
 from scipy import signal
 import numpy as np
-from sqlmodel.ext.asyncio.session import AsyncSession
 
-from images.models import Image
-from images.repository import ImageRepository
+from images.models import ImageORM
+from images import repository
+from images.schemas import ImageIn, ImagesRange
 from images.constants import IMAGE_SIZE
 
 
-def resize_image(image: Image) -> Image:
-    image.data = signal.resample(image.data, IMAGE_SIZE).astype(np.uint8).tolist()
+def resize_image(data: list[int]) -> list[int]:
+    return signal.resample(data, IMAGE_SIZE).astype(np.uint8).tolist()
+
+
+def apply_color_map(data: list[int]) -> list[int]:
+    return data
+
+
+async def create_image(image: ImageIn) -> ImageORM:
+    image.data = resize_image(image.data)
+    image = ImageORM(**image.model_dump())
+    image = await repository.create_image(image)
     return image
 
 
-def apply_color_map(image: Image) -> Image:
+async def get_image(image_id: int) -> ImageORM:
+    image = await repository.get_image_by_id(image_id)
+    image.data = apply_color_map(image.data)
     return image
 
 
-class ImageService:
-    @staticmethod
-    async def upload_image(session: AsyncSession, image: Image) -> Image | dict:
-        image = resize_image(image)
-        return await ImageRepository.upload_image(session, image)
+async def delete_image(image_id: int) -> bool:
+    return await repository.delete_image_by_id(image_id)
 
-    @staticmethod
-    async def get_image(session: AsyncSession, image_id: int) -> Image:
-        image = await ImageRepository.get_image(session, image_id)
-        return apply_color_map(image)
 
-    @staticmethod
-    async def delete_image(session: AsyncSession, image_id: int) -> None:
-        return await ImageRepository.delete_image(session, image_id)
-
-    @staticmethod
-    async def update_image(session: AsyncSession, image_id: int, image: Image) -> None:
-        image = resize_image(image)
-        return await ImageRepository.update_image(session, image_id, image)
+async def get_images(range: ImagesRange) -> list[ImageORM]:
+    return await repository.get_images_range(range.min_depth, range.max_depth)

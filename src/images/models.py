@@ -1,14 +1,10 @@
-from sqlmodel import ARRAY, Field, Integer, SQLModel
-from pydantic import field_validator
+from sqlalchemy import Column, Integer, ARRAY
+
+from database import Base
 
 
-class Image(SQLModel, table=True):
-    id: int = Field(default=None, primary_key=True)
-    data: list[int] = Field(sa_type=ARRAY(Integer))
+class ImageORM(Base):
+    __tablename__ = "images"
 
-    @field_validator("data")
-    @classmethod
-    def check_image_length(cls, v):
-        if len(v) == 0:
-            raise ValueError("Image data cannot be empty")
-        return v
+    id = Column(Integer, primary_key=True)
+    data = Column(ARRAY(Integer))

@@ -1,34 +1,37 @@
-from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlalchemy import select
 
-from images.models import Image
+from images.models import ImageORM
+from database import SessionLocal
 
 
-class ImageRepository:
-    @staticmethod
-    async def upload_image(session: AsyncSession, image: Image) -> Image:
+async def create_image(image: ImageORM) -> ImageORM:
+    async with SessionLocal() as session:
         session.add(image)
         await session.commit()
         await session.refresh(image)
-        return image
+    return image
 
-    @staticmethod
-    async def get_image(session: AsyncSession, image_id: int) -> Image:
-        image = await session.get(Image, image_id)
-        return image
 
-    @staticmethod
-    async def delete_image(session: AsyncSession, image_id: int) -> None:
-        image = await session.get(Image, image_id)
+async def get_image_by_id(image_id: int) -> ImageORM:
+    async with SessionLocal() as session:
+        image = await session.get(ImageORM, image_id)
+    return image
+
+
+async def delete_image_by_id(image_id: int) -> bool:
+    async with SessionLocal() as session:
+        image = await session.get(ImageORM, image_id)
         if image:
-            await session.delete(image)
+            session.delete(image)
             await session.commit()
+            return True
+        return False
 
-    @staticmethod
-    async def update_image(session: AsyncSession, image_id: int, image: Image) -> Image:
-        db_image = await session.get(Image, image_id)
-        if not db_image:
-            raise ValueError(f"Image with id {image_id} not found")
-        db_image.data = image.data
-        await session.commit()
-        await session.refresh(db_image)
-        return db_image
+
+async def get_images_range(min_depth: int, max_depth: int) -> list[ImageORM]:
+    async with SessionLocal() as session:
+        images = await session.execute(
+            select(ImageORM)
+                .where(ImageORM.id.between(min_depth, max_depth))
+        )
+        return images.scalars().all()
