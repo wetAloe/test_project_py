@@ -6,7 +6,7 @@ class DatabaseSettings(BaseSettings):
     postgres_password: str
     postgres_db: str
 
-    model_config = SettingsConfigDict(env_file=".env")
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @property
     def dns(self) -> str:
@@ -17,12 +17,4 @@ class AppSettings(BaseSettings):
     host: str
     port: int
 
-    model_config = SettingsConfigDict(env_file=".env")
-
-
-def get_database_settings() -> DatabaseSettings:
-    return DatabaseSettings()
-
-
-def get_app_settings() -> AppSettings:
-    return AppSettings()
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")

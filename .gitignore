@@ -1,12 +1,19 @@
+# data
 /data/*
 !data/.gitkeep
 
+# environment
 .env
 .venv/
 
+# cache
 __pycache__/
 */__pycache__/
 *.py[cod]
+.pytest_cache/
 
+# VSCode
 .vscode/*
+
+# notes
 notes.md

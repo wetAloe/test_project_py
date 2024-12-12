@@ -2,15 +2,18 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
-from database import create_db_and_tables
-from images.routes import router as image_router
+from src.database import DatabaseSessionManager
+from src.settings import DatabaseSettings
+from src.images.routes import router as image_router
 
 
 def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
-        await create_db_and_tables()
+        app.state.db = DatabaseSessionManager(DatabaseSettings().dns)
+        await app.state.db.create_tables()
         yield
+        await app.state.db.close()
 
     app = FastAPI(lifespan=lifespan)
     app.include_router(image_router)

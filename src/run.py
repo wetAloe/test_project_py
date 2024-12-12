@@ -1,12 +1,12 @@
 import uvicorn
 
-from app import create_app
-from settings import get_app_settings
+from src.app import create_app
+from src.settings import AppSettings
 
 
 def run():
     app = create_app()
-    settings = get_app_settings()
+    settings = AppSettings()
     uvicorn.run(app, host=settings.host, port=settings.port)
 
 

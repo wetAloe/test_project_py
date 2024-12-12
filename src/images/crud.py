@@ -1,8 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from images.models import ImageORM
-from exceptions import EntityDoesNotExistException
+from src.images.models import ImageORM
+from src.exceptions import EntityDoesNotExistException
 
 
 async def create_image(session: AsyncSession, image: ImageORM) -> ImageORM:

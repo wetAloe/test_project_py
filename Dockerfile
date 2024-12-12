@@ -1,10 +1,11 @@
 FROM python:3.12-alpine
 
-WORKDIR /src
+WORKDIR /workdir
+ENV PYTHONPATH=/workdir
 
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY ./src .
+COPY ./src ./src
 
-CMD ["python", "run.py"]
+CMD ["python", "src/run.py"]

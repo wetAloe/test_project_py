@@ -1,10 +1,11 @@
-from sqlalchemy import Column, Integer, ARRAY
+from sqlalchemy import Column, Integer, LargeBinary
+from sqlalchemy.orm import Mapped
 
-from database import Base
+from src.database import Base
 
 
 class ImageORM(Base):
     __tablename__ = "images"
 
-    id = Column(Integer, primary_key=True)
-    data = Column(ARRAY(Integer))
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    data: Mapped[bytes] = Column(LargeBinary)

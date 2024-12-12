@@ -1,7 +1,7 @@
 from scipy import signal
 import numpy as np
 
-from images.constants import IMAGE_SIZE
+from src.images.constants import IMAGE_SIZE
 
 
 def resize_image(data: list[int]) -> list[int]:

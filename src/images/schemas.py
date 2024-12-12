@@ -5,7 +5,7 @@ from fastapi.exceptions import RequestValidationError
 
 
 class ImageBase(BaseModel):
-    data: list[int]
+    data: bytes
 
 
 class ImageIn(ImageBase):
