@@ -13,7 +13,7 @@ class DatabaseSettings(BaseSettings):
         return f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}@db:5432/{self.postgres_db}"
     
 
-class AppSettings(BaseSettings):
+class RuntimeSettings(BaseSettings):
     host: str
     port: int
 

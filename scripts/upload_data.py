@@ -15,6 +15,7 @@ async def upload_data():
 
                 data = list(map(int, row[1:]))
                 await session.post("http://localhost:8000/images/", json={"data": data})
+                break
 
 
 if __name__ == "__main__":

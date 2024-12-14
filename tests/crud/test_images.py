@@ -7,7 +7,7 @@ from src.exceptions import EntityDoesNotExistException
 
 
 @pytest.fixture
-def test_image():
+def test_image() -> ImageORM:
     return ImageORM(data=bytes([0] * 200))
 
 
