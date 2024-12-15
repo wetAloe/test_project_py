@@ -7,5 +7,9 @@ COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY ./src ./src
+COPY ./alembic.ini .
 
-CMD ["python", "src/run.py"]
+COPY ./entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]

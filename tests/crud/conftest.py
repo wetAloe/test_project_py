@@ -8,6 +8,6 @@ from src.database import DatabaseSessionManager
 
 @pytest_asyncio.fixture()
 async def session(database: DatabaseSessionManager) -> AsyncGenerator[AsyncSession, None]:
-    await database.create_tables()
+    await database.drop_create_tables()
     async with database.sessionmaker() as session:
         yield session

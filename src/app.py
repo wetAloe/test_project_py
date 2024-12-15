@@ -11,7 +11,7 @@ def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         app.state.db = DatabaseSessionManager(DatabaseSettings().dns)
-        await app.state.db.create_tables()
+        await app.state.db.drop_create_tables()
         yield
         await app.state.db.close()
 

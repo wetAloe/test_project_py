@@ -11,7 +11,7 @@ from src.database import DatabaseSessionManager, get_session
 
 @pytest.fixture()
 def client(database: DatabaseSessionManager) -> TestClient:
-    asyncio.run(database.create_tables())
+    asyncio.run(database.drop_create_tables())
     async def override_get_session() -> AsyncGenerator[AsyncSession, None]:
         async with database.sessionmaker() as session:
             yield session

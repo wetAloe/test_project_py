@@ -17,7 +17,7 @@ class DatabaseSessionManager:
     async def close(self):
         await self._async_engine.dispose()
 
-    async def create_tables(self):
+    async def drop_create_tables(self):
         async with self._async_engine.begin() as conn:
             await conn.run_sync(Base.metadata.drop_all)
             await conn.run_sync(Base.metadata.create_all)
